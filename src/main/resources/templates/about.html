@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>About - Toy Store Inventory Management</title>
+</head>
+<body>
+
+<div class="container">
+    <h1>About Toy Store Inventory Management System</h1>
+    <hr>
+    <p>Welcome to the Toy Store Inventory Management System! Our application is designed to help toy store owners manage their inventory efficiently and effectively. Whether you need to track parts like action figure arms or products like board games, our system has you covered.</p>
+    <p>Our toy store offers a wide variety of products to delight children of all ages, including:</p>
+    <ul>
+        <li>Action Figures</li>
+        <li>Board Games</li>
+        <li>Building Blocks</li>
+        <li>Stuffed Animals</li>
+        <li>Puzzles</li>
+    </ul>
+    <p>Each product is meticulously categorized and managed to ensure that our customers always have the best selection available. Thank you for choosing our inventory management system to streamline your toy store operations.</p>
+    <a th:href="@{/mainscreen}" class="btn btn-primary">Back to Main Screen</a>
+</div>
+
+</body>
+</html>
