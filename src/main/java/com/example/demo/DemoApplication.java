@@ -27,11 +27,11 @@ public class DemoApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		if (partRepository.count() == 0 && productRepository.count() == 0) {
 			// Adding sample parts
-			InhousePart part1 = new InhousePart("Action Figure Arm", 5.0, 100, 1);
-			OutsourcedPart part2 = new OutsourcedPart("Board Game Piece", 1.0, 500, "BoardGameInc");
-			InhousePart part3 = new InhousePart("Building Block Set", 10.0, 50, 2);
-			OutsourcedPart part4 = new OutsourcedPart("Stuffed Animal Eye", 0.5, 300, "StuffedToyCo");
-			InhousePart part5 = new InhousePart("Puzzle Piece", 0.2, 1000, 3);
+			InhousePart part1 = new InhousePart("Action Figure Arm", 5.0, 100, 10, 200, 1);
+			OutsourcedPart part2 = new OutsourcedPart("Board Game Piece", 1.0, 500, 50, 1000, "BoardGameInc");
+			InhousePart part3 = new InhousePart("Building Block Set", 10.0, 50, 5, 100, 2);
+			OutsourcedPart part4 = new OutsourcedPart("Stuffed Animal Eye", 0.5, 300, 30, 600, "StuffedToyCo");
+			InhousePart part5 = new InhousePart("Puzzle Piece", 0.2, 1000, 100, 2000, 3);
 
 			partRepository.save(part1);
 			partRepository.save(part2);

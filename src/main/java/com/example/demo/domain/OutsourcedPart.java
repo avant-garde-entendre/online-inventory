@@ -11,8 +11,8 @@ public class OutsourcedPart extends Part {
     public OutsourcedPart() {
     }
 
-    public OutsourcedPart(String name, double price, int inv, String companyName) {
-        super(name, price, inv);
+    public OutsourcedPart(String name, double price, int inv, int minInv, int maxInv, String companyName) {
+        super(name, price, inv, minInv, maxInv);
         this.companyName = companyName;
     }
 
