@@ -5,9 +5,9 @@ import com.example.demo.validators.ValidDeletePart;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -100,5 +100,32 @@ public abstract class Part implements Serializable {
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    // Override toString method
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
+    // Override equals method
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Part part = (Part) o;
+        return id == part.id &&
+                Double.compare(part.price, price) == 0 &&
+                inv == part.inv &&
+                minInv == part.minInv &&
+                maxInv == part.maxInv &&
+                Objects.equals(name, part.name) &&
+                Objects.equals(products, part.products);
+    }
+
+    // Override hashCode method
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, inv, minInv, maxInv, products);
     }
 }
