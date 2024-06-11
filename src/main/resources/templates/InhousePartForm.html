@@ -10,6 +10,15 @@
 <h1>Inhouse Part Detail</h1>
 <form action="#" th:action="@{/showFormAddInPart}" th:object="${inhousepart}" method="POST"}>
 
+    <!-- Add minimum and maximum selection -->
+    <div class="form-group">
+        <label for="minInv">Minimum Inventory</label>
+        <input type="number" class="form-control" id="minInv" name="minInv" th:field="*{minInv}" required>
+    </div>
+    <div class="form-group">
+        <label for="maxInv">Maximum Inventory</label>
+        <input type="number" class="form-control" id="maxInv" name="maxInv" th:field="*{maxInv}" required>
+    </div>
 <!-- Add hidden form field to handle update -->
     <p><input type="hidden" th:field="*{id}"/></p>
 
