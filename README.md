@@ -1,26 +1,82 @@
-<strong>** DO NOT DISTRIBUTE OR PUBLICLY POST SOLUTIONS TO THESE LABS. MAKE ALL FORKS OF THIS REPOSITORY WITH SOLUTION CODE PRIVATE. PLEASE REFER TO THE STUDENT CODE OF CONDUCT AND ETHICAL EXPECTATIONS FOR COLLEGE OF INFORMATION TECHNOLOGY STUDENTS FOR SPECIFICS. ** </strong>
+# Project Customization Notes
 
-# WESTERN GOVERNOR UNIVERSITY 
-## D287 – JAVA FRAMEWORKS
-Welcome to Java Frameworks! This is an opportunity for students to implement user interfaces and learn to leverage existing frameworks, assets, and content for object-oriented programming.
-FOR SPECIFIC TASK INSTRUCTIONS AND REQUIREMENTS FOR THIS ASSESSMENT, PLEASE REFER TO THE COURSE PAGE.
-## BASIC INSTRUCTIONS
-For this project, you will use the Integrated Development Environment (IDE) link in the web links section of this assessment to install the IDE, IntelliJ IDEA (Ultimate Edition). All relevant links are on the course page. Please refer to the course of study for specific links. You will sign up for a free student license using your WGU.edu email address. Please see the “IntelliJ Ultimate Edition Instructions” attachment for instructions on how do this. Next you will download the “Inventory Management Application Template Code” provided in the web links section and open it in IntelliJ IDEA (Ultimate Edition). You will upload this project to a private external GitLab repository and backup regularly. As a part of this, you have been provided with a base code (starting point). 
+This README file includes notes describing where in the code to find the changes made for each of parts C to J.
 
-## SUPPLEMENTAL RESOURCES  
-1.	How to clone a project to IntelliJ using Git?
+## C. Customize the HTML User Interface
+- **Prompt:** Customize the HTML user interface for your customer’s application.
+- **File:** src/main/resources/templates/mainscreen.html
+- **Line Number:** 14 & 19
+- **Change:** Customized HTML with toy store branding, added shop name, product names, and part names.
 
-> Ensure that you have Git installed on your system and that IntelliJ is installed using [Toolbox](https://www.jetbrains.com/toolbox-app/). Make sure that you are using version 2022.3.2. Once this has been confirmed, click the clone button and use the 'IntelliJ IDEA (HTTPS)' button. This will open IntelliJ with a prompt to clone the proejct. Save it in a safe location for the directory and press clone. IntelliJ will prompt you for your credentials. Enter in your WGU Credentials and the project will be cloned onto your local machine.  
+## D. Add an "About" Page
+- **Prompt:** Add an "About" page to the application to describe your chosen customer’s company to web viewers.
+- **File:** src/main/resources/templates/about.html
+- **Line Number:** Entire file
+- **File:** src/main/java/com/example/demo/controllers/MainScreenController.java
+- **Line Number:** 55-59
+- **Change:** Created a new About page describing the toy store, with navigation to and from the main screen.
 
-2. How to create a branch and start Development?
+## E. Add a Sample Inventory
+- **Prompt:** Add a sample inventory appropriate for your chosen store to the application.
+- **File:** src/main/java/com/example/demo/DemoApplication.java
+- **Line Number:** 3-9, 14-20, 26-55
+- **File:** src/main/java/com/example/demo/domain/InhousePart.java
+- **Line Number:** 14-18
+- **File:** src/main/java/com/example/demo/domain/OutsourcedPart.java
+- **Line Number:** 14-18
+- **Change:** Added code to initialize sample inventory with five products and five parts.
 
-- GitLab method
-> Press the '+' button located near your branch name. In the dropdown list, press the 'New branch' button. This will allow you to create a name for your branch. Once the branch has been named, you can select 'Create Branch' to push the branch to your repository.
+## F. Add a "Buy Now" Button
+- **Prompt:** Add a "Buy Now" button to your product list.
+- **File:** src/main/java/com/example/demo/controllers/AddProductController.java
+- **Line Number:** 15 & 38-52
+- **File:** src/main/resources/templates/mainscreen.html
+- **Line Number:**7, 23, 49-50, 86-87 & 90
+- **Change:** Added “Buy Now” button and associated functionality to decrement product inventory and display success/failure message.
 
-- IntelliJ method
-> In IntelliJ, Go to the 'Git' button on the top toolbar. Select the new branch option and create a name for the branch. Make sure checkout branch is selected and press create. You can now add a commit message and push the new branch to the local repo.
+## G. Modify Parts to Track Maximum and Minimum Inventory
+- **Prompt:** Modify the parts to track maximum and minimum inventory.
+- **File:** src/main/java/com/example/demo/DemoApplication.java
+- **Line Number:** 30-34
+- **File:** src/main/java/com/example/demo/controllers/AddProductController.java
+- **Line Number:** 14-17
+- **File:** src/main/java/com/example/demo/domain/InhousePart.java
+- **Line Number:** 14-15
+- **File:** src/main/java/com/example/demo/domain/OutsourcedPart.java
+- **Line Number:** 14-15
+- **File:** src/main/java/com/example/demo/domain/Part.java
+- **Line Number:** 26-30, 40-47, 81-82, 85-86, 89-90, 93-102
+- **Change:** Added fields for maxInv and minInv, including getters and setters.
+- **File:** src/main/resources/templates/InhousePartForm.html
+- **Line Number:** 14-22
+- **File:** src/main/resources/templates/OutsourcedPartForm.html
+- **Line Number:** 13-21
+- **Change:** Added input fields for minInv and maxInv.
+- **File:** src/main/java/com/example/demo/application.properties
+- **Line Number:** 6
+- **Change:** Changed the name of the database.
 
-## SUPPORT
-If you need additional support, please navigate to the course page and reach out to your course instructor.
-## FUTURE USE
-Take this opportunity to create or add to a simple resume portfolio to highlight and showcase your work for future use in career search, experience, and education!
+## H. Add Validation
+- **Prompt:** Add validation for between or at the maximum and minimum fields.
+- **File:** src/main/java/com/example/demo/domain/Part.java
+- **Line Number:** 29
+- **File:** src/main/java/com/example/controller/AddInhousePartController.java
+- **Line Number:** 38-43
+- **File:** src/main/java/com/example/controller/AddOutsourcedPartController.java
+- **Line Number:** 38-44
+- **Change:** Added validation logic in the save method to ensure inventory is between min and max values.
+
+## I. Add Unit Tests
+- **Prompt:** Add at least two unit tests for the maximum and minimum fields.
+- **File:** src/test/java/com/example/demo/PartTest.java
+- **Line Number:** 6-9, 35-37, 169-198
+- **Change:** Added unit tests for maxInv and minInv fields.
+- **File:** src/main/java/com/example/demo/domain/Part.java
+- **Line Number:** 10 & 105-129
+- **Change:** Added toString, boolean & hashcode public functions to correlate with PartTest.java.
+
+## J. Clean Code
+- **Prompt:** Remove the class files for any unused validators.
+- **File:** Various files in src/main/java/com/example/demo/validators
+- **Line Number:** DeletePartValidator.java
+- **Change:** Removed unused validator class files to clean up the codebase.

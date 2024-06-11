@@ -11,7 +11,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -31,6 +35,24 @@ public class AddProductController {
     private List<Part> theParts;
     private static Product product1;
     private Product product;
+
+
+
+    @GetMapping("/buyNow")
+    public String buyNow(@RequestParam("productID") long productID, RedirectAttributes redirectAttributes) {
+        ProductService productService = context.getBean(ProductServiceImpl.class);
+        Product product = productService.findById((int) productID);
+
+        if (product != null && product.getInv() > 0) {
+            product.setInv(product.getInv() - 1);
+            productService.save(product);
+            redirectAttributes.addFlashAttribute("message", "Purchase successful!");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Purchase failed. Product is out of stock.");
+        }
+
+        return "redirect:/mainscreen";
+    }
 
     @GetMapping("/showFormAddProduct")
     public String showFormAddPart(Model theModel) {

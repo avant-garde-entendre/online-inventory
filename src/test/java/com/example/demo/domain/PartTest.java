@@ -3,6 +3,10 @@ package com.example.demo.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,14 +26,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class PartTest {
     Part partIn;
     Part partOut;
+    private Validator validator;
+
     @BeforeEach
     void setUp() {
-        partIn=new InhousePart();
-        partOut=new OutsourcedPart();
+        partIn = new InhousePart();
+        partOut = new OutsourcedPart();
+
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
     }
     @Test
     void getId() {
-        Long idValue=4L;
+        Long idValue = 4L;
         partIn.setId(idValue);
         assertEquals(partIn.getId(), idValue);
         partOut.setId(idValue);
@@ -38,7 +47,7 @@ class PartTest {
 
     @Test
     void setId() {
-        Long idValue=4L;
+        Long idValue = 4L;
         partIn.setId(idValue);
         assertEquals(partIn.getId(), idValue);
         partOut.setId(idValue);
@@ -47,106 +56,106 @@ class PartTest {
 
     @Test
     void getName() {
-        String name="test inhouse part";
+        String name = "test inhouse part";
         partIn.setName(name);
-        assertEquals(name,partIn.getName());
-        name="test outsourced part";
+        assertEquals(name, partIn.getName());
+        name = "test outsourced part";
         partOut.setName(name);
-        assertEquals(name,partOut.getName());
+        assertEquals(name, partOut.getName());
     }
 
     @Test
     void setName() {
-        String name="test inhouse part";
+        String name = "test inhouse part";
         partIn.setName(name);
-        assertEquals(name,partIn.getName());
-        name="test outsourced part";
+        assertEquals(name, partIn.getName());
+        name = "test outsourced part";
         partOut.setName(name);
-        assertEquals(name,partOut.getName());
+        assertEquals(name, partOut.getName());
     }
 
     @Test
     void getPrice() {
-        double price=1.0;
+        double price = 1.0;
         partIn.setPrice(price);
-        assertEquals(price,partIn.getPrice());
+        assertEquals(price, partIn.getPrice());
         partOut.setPrice(price);
-        assertEquals(price,partOut.getPrice());
+        assertEquals(price, partOut.getPrice());
     }
 
     @Test
     void setPrice() {
-        double price=1.0;
+        double price = 1.0;
         partIn.setPrice(price);
-        assertEquals(price,partIn.getPrice());
+        assertEquals(price, partIn.getPrice());
         partOut.setPrice(price);
-        assertEquals(price,partOut.getPrice());
+        assertEquals(price, partOut.getPrice());
     }
 
     @Test
     void getInv() {
-        int inv=5;
+        int inv = 5;
         partIn.setInv(inv);
-        assertEquals(inv,partIn.getInv());
+        assertEquals(inv, partIn.getInv());
         partOut.setInv(inv);
-        assertEquals(inv,partOut.getInv());
+        assertEquals(inv, partOut.getInv());
     }
 
     @Test
     void setInv() {
-        int inv=5;
+        int inv = 5;
         partIn.setInv(inv);
-        assertEquals(inv,partIn.getInv());
+        assertEquals(inv, partIn.getInv());
         partOut.setInv(inv);
-        assertEquals(inv,partOut.getInv());
+        assertEquals(inv, partOut.getInv());
     }
 
     @Test
     void getProducts() {
-        Product product1= new Product();
-        Product product2= new Product();
-        Set<Product> myProducts= new HashSet<>();
+        Product product1 = new Product();
+        Product product2 = new Product();
+        Set<Product> myProducts = new HashSet<>();
         myProducts.add(product1);
         myProducts.add(product2);
         partIn.setProducts(myProducts);
-        assertEquals(myProducts,partIn.getProducts());
+        assertEquals(myProducts, partIn.getProducts());
         partOut.setProducts(myProducts);
-        assertEquals(myProducts,partOut.getProducts());
+        assertEquals(myProducts, partOut.getProducts());
     }
 
     @Test
     void setProducts() {
-        Product product1= new Product();
-        Product product2= new Product();
-        Set<Product> myProducts= new HashSet<>();
+        Product product1 = new Product();
+        Product product2 = new Product();
+        Set<Product> myProducts = new HashSet<>();
         myProducts.add(product1);
         myProducts.add(product2);
         partIn.setProducts(myProducts);
-        assertEquals(myProducts,partIn.getProducts());
+        assertEquals(myProducts, partIn.getProducts());
         partOut.setProducts(myProducts);
-        assertEquals(myProducts,partOut.getProducts());
+        assertEquals(myProducts, partOut.getProducts());
     }
 
     @Test
     void testToString() {
-        String name="test inhouse part";
+        String name = "test inhouse part";
         partIn.setName(name);
-        assertEquals(name,partIn.toString());
-        name="test outsourced part";
+        assertEquals(name, partIn.toString());
+        name = "test outsourced part";
         partOut.setName(name);
-        assertEquals(name,partOut.toString());
+        assertEquals(name, partOut.toString());
     }
 
     @Test
     void testEquals() {
         partIn.setId(1l);
-        Part newPartIn=new InhousePart();
+        Part newPartIn = new InhousePart();
         newPartIn.setId(1l);
-        assertEquals(partIn,newPartIn);
+        assertEquals(partIn, newPartIn);
         partOut.setId(1l);
-        Part newPartOut=new OutsourcedPart();
+        Part newPartOut = new OutsourcedPart();
         newPartOut.setId(1l);
-        assertEquals(partOut,newPartOut);
+        assertEquals(partOut, newPartOut);
 
     }
 
@@ -154,6 +163,37 @@ class PartTest {
     void testHashCode() {
         partIn.setId(1l);
         partOut.setId(1l);
-        assertEquals(partIn.hashCode(),partOut.hashCode());
+        assertEquals(partIn.hashCode(), partOut.hashCode());
+    }
+
+    // New tests for minInv and maxInv validation
+    @Test
+    void testMinInvValidation() {
+        partIn.setName("Test Part");
+        partIn.setPrice(100.0);
+        partIn.setInv(10);
+        partIn.setMinInv(-1); // Invalid minInv
+        partIn.setMaxInv(100);
+
+        Set<ConstraintViolation<Part>> violations = validator.validate(partIn);
+        assertEquals(1, violations.size());
+
+        ConstraintViolation<Part> violation = violations.iterator().next();
+        assertEquals("Minimum inventory value must be positive", violation.getMessage());
+    }
+
+    @Test
+    void testMaxInvValidation() {
+        partIn.setName("Test Part");
+        partIn.setPrice(100.0);
+        partIn.setInv(10);
+        partIn.setMinInv(0);
+        partIn.setMaxInv(1001); // Invalid maxInv
+
+        Set<ConstraintViolation<Part>> violations = validator.validate(partIn);
+        assertEquals(1, violations.size());
+
+        ConstraintViolation<Part> violation = violations.iterator().next();
+        assertEquals("Maximum inventory value must be positive", violation.getMessage());
     }
 }
